@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">Game Center</string>
+
+    <string-array name="strArrRole">
+        <item>Please choose your role</item>
+        <item>Student</item>
+        <item>Employee</item>
+        <item>Freelancer</item>
+    </string-array>
+
+    <string name="strCompanyDesc">
+        Game Center is a store that provides various types of games across all kinds of different platforms.
+        \nHere is our location:
+    </string>
+
+    <string name="strBirthday">Your birthday: </string>
+
+    <string name="drawerOpen">Drawer opened</string>
+
+    <string name="drawerClose">Drawer closed</string>
+
+    <string name="strUsername">Username</string>
+
+    <string name="strUserEmail">Email</string>
+
+    <string name="strUserPhone">Phone</string>
+
+    <string name="strColon">:</string>
+
+    <string name="strHome">Home</string>
+
+    <string name="homeHeader">My Games</string>
+
+    <string name="strAboutUs">About us</string>
+
+    <string name="strRegisterHere">Don\'t have an account? Register here !</string>
+
+    <string name="strNoGame">You don\'t have any game yet</string>
+
+    <string name="strPlayGame">Play Game</string>
+
+    <string name="strGenre">Genre</string>
+
+    <string name="strDesc">Description</string>
+
+    <string name="strPlayHours">Playing Hours</string>
+
+    <string name="strHours">hour(s)</string>
+
+    <string name="strGames">Games</string>
+
+    <string name="strStock">Stock</string>
+
+    <string name="strPrice">Price</string>
+
+    <string name="strBuy">Buy</string>
+
+    <string name="strPayment">Payment Confirmation</string>
+
+    <string name="hintPayment">Input your payment quantity</string>
+
+    <string name="strPay">Pay</string>
+
+    <string name="strLogout">Logout</string>
+
+</resources>

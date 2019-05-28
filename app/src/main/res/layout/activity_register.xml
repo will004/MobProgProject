@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RegisterActivity">
+
+    <include
+        android:id="@+id/toolbarReg"
+        layout="@layout/toolbar_layout" />
+
+    <EditText
+        android:id="@+id/etName"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Input your name" />
+
+    <EditText
+        android:id="@+id/etEmailReg"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Input your email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/etPasswordReg"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Input your password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/etConfirmPass"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm your password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/etPhone"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Input your phone number"
+        android:inputType="phone" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rdMale"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/rdFemale"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvBirthDate"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/strBirthday"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btnBirthDate"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select your birth date" />
+    </LinearLayout>
+
+
+    <Spinner
+        android:id="@+id/spRole"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </Spinner>
+
+    <Button
+        android:id="@+id/btnRegister"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register" />
+
+</LinearLayout>

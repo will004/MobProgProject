@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <include
+        android:id="@+id/toolbarLogin"
+        layout="@layout/toolbar_layout" />
+
+    <EditText
+        android:id="@+id/etEmailLogin"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Input your email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/etPasswordLogin"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Input your password"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/tvHere"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/tab_indicator_text"
+        android:textColorLink="@android:color/tab_indicator_text"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnLogIn"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Login" />
+
+</LinearLayout>

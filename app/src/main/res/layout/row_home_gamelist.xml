@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+
+    <GridLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="4">
+
+        <TextView
+            android:id="@+id/homeGameTitle"
+            android:layout_columnSpan="3"
+            android:maxWidth="200dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView android:text="@string/strGenre" />
+
+        <TextView
+            android:padding="5dp"
+            android:text="@string/strColon" />
+
+        <TextView
+            android:id="@+id/homeGameGenre"
+            android:maxWidth="200dp" />
+
+        <TextView android:text="@string/strDesc" />
+
+        <TextView
+            android:padding="5dp"
+            android:text="@string/strColon" />
+
+        <TextView
+            android:id="@+id/homeGameDesc"
+            android:maxWidth="200dp" />
+
+        <TextView android:text="@string/strPlayHours" />
+
+        <TextView
+            android:padding="5dp"
+            android:text="@string/strColon" />
+
+        <TextView
+            android:id="@+id/homeGameHours"
+            android:maxWidth="200dp" />
+
+    </GridLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="30dp"
+            android:text="@string/strPlayGame" />
+
+    </LinearLayout>
+
+</LinearLayout>
