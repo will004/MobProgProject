@@ -41,7 +41,7 @@
         <activity android:name=".HomeActivity" />
         <activity
             android:name=".AboutUsActivity"
-            android:label="Map"></activity>
+            android:label="Map" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
