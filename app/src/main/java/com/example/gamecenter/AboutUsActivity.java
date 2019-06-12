@@ -6,20 +6,29 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class AboutUsActivity extends AppCompatActivity {
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+public class AboutUsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
     Toolbar toolbar;
     ActionBar actionBar;
+
+    GoogleMap map;
 
     private void createToolbar(){
         toolbar = findViewById(R.id.toolbarAboutUs);
@@ -97,5 +106,20 @@ public class AboutUsActivity extends AppCompatActivity {
         createNavigationMenu();
 
         Utility.listContext.add(AboutUsActivity.this);
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+
+        //Add marker
+        LatLng office = new LatLng(-6.2178652, 106.7335872);
+
+        map.addMarker(new MarkerOptions().position(office).title("Game Center Office"));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(office, 15));
     }
 }
