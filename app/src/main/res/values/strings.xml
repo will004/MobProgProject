@@ -2,7 +2,7 @@
     <string name="app_name">Game Center</string>
 
     <string-array name="strArrRole">
-        <item>Please choose your role</item>
+        <item>Please choose your status</item>
         <item>Student</item>
         <item>Employee</item>
         <item>Freelancer</item>
