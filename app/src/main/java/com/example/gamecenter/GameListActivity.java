@@ -20,6 +20,8 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class GameListActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -29,6 +31,8 @@ public class GameListActivity extends AppCompatActivity {
     NavigationView navigationView;
 
     ListView lvGamesGameList;
+
+    ArrayList<GameData> games;
 
     private void createToolbar() {
         toolbar = findViewById(R.id.toolbarGame);
@@ -96,6 +100,7 @@ public class GameListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //delete soon
     private void addGames() {
         Utility.games.add(new GameData("GM001","Minesweeper", "Arcade", "Fun!", 10, 10000, (float) 3.0));
         Utility.games.add(new GameData("GM002","Laplace Mobile", "Adventure", "Wow", 10, 0, (float) 5.0));
@@ -108,6 +113,7 @@ public class GameListActivity extends AppCompatActivity {
         Utility.games.add(new GameData("GM009","Stardew Valley", "RPG", "Wow", 10, 0, (float) 4.0));
         Utility.games.add(new GameData("GM0010","Angry Bird", "Arcade", "Wow", 10, 0, (float) 5.0));
     }
+    //end of delete
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,10 +125,12 @@ public class GameListActivity extends AppCompatActivity {
 
         Utility.listContext.add(GameListActivity.this);
 
+        //delete soon
         if(Utility.create10List){
             addGames();
             Utility.create10List=false;
         }
+        //end of delete
 
         lvGamesGameList = findViewById(R.id.gameGameList);
 
