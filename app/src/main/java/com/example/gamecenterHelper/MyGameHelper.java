@@ -1,5 +1,6 @@
 package com.example.gamecenterHelper;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -43,7 +44,7 @@ public class MyGameHelper {
         MyGame mygame;
 
         do{
-            mygame = new MyGame(cursor.getInt(1), cursor.getColumnName(2), cursor.getColumnName(3));
+            mygame = new MyGame(cursor.getInt(0), cursor.getInt(1), cursor.getColumnName(2), cursor.getColumnName(3));
 
             temp.add(mygame);
 
@@ -53,7 +54,8 @@ public class MyGameHelper {
         return temp;
     }
 
-    public void updatePlayingHour(){
-
+    public void updatePlayingHour(int mygame_id, int playHour){
+        Cursor cursor = sqLiteDatabase.rawQuery("UPDATE mygames SET 'playinghour' = " + playHour + "WHERE 'mygame_id' = "+ mygame_id, null);
+        cursor.close();
     }
 }

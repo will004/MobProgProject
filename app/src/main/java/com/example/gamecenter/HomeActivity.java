@@ -218,10 +218,14 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     int hours = playGame();
-                    //get playing hour from table mygame, then update it
-                    Utility.data.get(idx).myGames.get(position).gameHourPlay += hours;
-                    //end
-                    tvGameHours.setText(Utility.data.get(idx).myGames.get(position).gameHourPlay+"");
+                    int playhoursDB = myGames.get(position).getPlayinghour();
+                    playhoursDB += hours;
+                    //update to mygames
+                    myGameHelper.open();
+                    //update
+                    myGameHelper.updatePlayingHour(myGames.get(position).getMygame_id(), playhoursDB);
+                    myGameHelper.close();
+                    tvGameHours.setText(playhoursDB+"");
                 }
             });
 
