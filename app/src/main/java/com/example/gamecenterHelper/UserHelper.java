@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.model.User;
 
@@ -37,25 +38,32 @@ public class UserHelper {
     }
 
     //open DB
-    void open() throws SQLException {
+    public void open() throws SQLException {
         databaseHelper = new DatabaseHelper(context);
         sqLiteDatabase = databaseHelper.getWritableDatabase();
     }
 
-    void close() {
+    public void close() {
         sqLiteDatabase.close();
     }
 
-    void insertData(User user){
+    public void insertData(User user){
 
         //cek user_id udah ada di database atau belum
+
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM users WHERE user_id = ?", new String[]{user.getUserID()});
 
-        while(cursor.getCount() == 0){
+        while(cursor.getCount() != 0){
             user.setUserID(generateId());
             cursor = sqLiteDatabase.rawQuery("SELECT * FROM users WHERE user_id = ?", new String[]{user.getUserID()});
+
+            if(cursor.getCount() == 0) break;
         }
+        cursor.close();
+        close();
+
         //end
+        open();
 
         //insert to database
         ContentValues contentValues = new ContentValues();
@@ -69,6 +77,7 @@ public class UserHelper {
         contentValues.put(COL_USER_BALANCE, user.getBalance());
         contentValues.put(COL_USER_STATUS, user.getStatus());
 
+        sqLiteDatabase.insert("users", null, contentValues);
     }
 
 }

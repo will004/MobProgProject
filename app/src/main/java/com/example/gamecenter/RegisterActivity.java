@@ -18,6 +18,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.gamecenterHelper.UserHelper;
+import com.example.model.User;
+
 import java.util.Calendar;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -36,6 +39,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     Toolbar toolbar;
 
     String date = "";
+
+    UserHelper userHelper;
 
     private String generateId(){
         int digit1 = (int) (Math.random()*(9-0)+1);
@@ -150,6 +155,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 else gender = rdMale.getText().toString();
 
                 //add to database
+                userHelper = new UserHelper(this);
+                userHelper.open();
+                User user = new User(id, name, pass, email, phone, role, gender, date);
+                userHelper.insertData(user);
+                finish();
+
                 //delete soon
                 Utility.data.add(new UserData(id, name, pass, email, phone, role, gender, date));
                 //delete end
