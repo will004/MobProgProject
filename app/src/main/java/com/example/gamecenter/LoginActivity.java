@@ -32,6 +32,9 @@ public class LoginActivity extends AppCompatActivity {
 
     UserHelper userHelper;
 
+    String url = "https://api.myjson.com/bins/15cfg8";
+
+
 
 
     private void createHyperlinkHere(){
@@ -67,6 +70,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         return -1;
+    }
+
+    private void pullDataFromAPI(){
+
     }
 
     @Override
