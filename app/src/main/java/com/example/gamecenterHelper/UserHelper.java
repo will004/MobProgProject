@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.model.User;
 
+import java.util.ArrayList;
+
 public class UserHelper {
     private DatabaseHelper databaseHelper;
     private SQLiteDatabase sqLiteDatabase;
@@ -80,20 +82,30 @@ public class UserHelper {
     }
 
     //return nya ID dari user
-    public String login(String email, String password){
+    public ArrayList<String> login(String email, String password){
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM users WHERE user_email = ? AND user_password = ?", new String[]{email, password});
         cursor.moveToFirst();
 
-        String user_id;
+        ArrayList<String> output = new ArrayList<>();
+
+        String user_id, user_name, user_email, user_phone;
         if(cursor.getCount() == 0){
-            user_id = "";
-            return user_id;
+            output.add("");
+            return output;
         }
-        user_id = cursor.getColumnName(0);
+        user_id = cursor.getString(0);
+        user_name = cursor.getString(1);
+        user_email = cursor.getString(2);
+        user_phone = cursor.getString(5);
 
         cursor.close();
 
-        return user_id;
+        output.add(user_id);
+        output.add(user_name);
+        output.add(user_email);
+        output.add(user_phone);
+
+        return output;
     }
 
 }

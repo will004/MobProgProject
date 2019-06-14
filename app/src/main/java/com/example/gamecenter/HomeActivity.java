@@ -19,6 +19,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.gamecenterHelper.GameHelper;
+import com.example.gamecenterHelper.MyGameHelper;
+import com.example.model.Game;
+import com.example.model.MyGame;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
@@ -32,8 +38,13 @@ public class HomeActivity extends AppCompatActivity {
 
     TextView tvUsername, tvEmail, tvPhone, tvNoGame;
 
+    MyGameHelper myGameHelper;
+    GameHelper gameHelper;
+
     int idx;
-    String user_id;
+    String user_id, user_name, user_email, user_phone;
+    ArrayList<MyGame> myGames;
+    ArrayList<Game> games;
 
     ListView lvGameList;
 
@@ -121,25 +132,40 @@ public class HomeActivity extends AppCompatActivity {
         tvEmail = findViewById(R.id.homeEmail);
         tvPhone = findViewById(R.id.homePhone);
 
-        //delete soon
-        idx = Utility.idxUser;
-        //end
 
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
+        user_name = intent.getStringExtra("user_name");
+        user_email = intent.getStringExtra("user_email");
+        user_phone = intent.getStringExtra("user_phone");
 
-
-        tvUsername.setText(Utility.data.get(idx).name);
-        tvEmail.setText(Utility.data.get(idx).email);
-        tvPhone.setText(Utility.data.get(idx).phone);
+        //modify - get data from users
+        tvUsername.setText(user_name);
+        tvEmail.setText(user_email);
+        tvPhone.setText(user_phone);
+        //end
 
         tvNoGame = findViewById(R.id.noGame);
 
+        //get data from table mygames
+        myGameHelper = new MyGameHelper(this);
+        myGameHelper.open();
+        myGames = myGameHelper.searchMyGame(user_id);
+        myGameHelper.close();
 
-        if (Utility.data.get(idx).myGames.size() == 0) {
+
+
+        if (myGames.size() == 0) {
             tvNoGame.setText(R.string.strNoGame);
-        } else {
+        }
+        else {
             tvNoGame.setText("");
+
+            //get game_id from mygame, then show its details here through table game
+            gameHelper = new GameHelper(this);
+            gameHelper.open();
+            games = gameHelper.getGameDetails(user_id);
+            gameHelper.close();
 
             //buat listView
             lvGameList = findViewById(R.id.homeGameList);
@@ -157,12 +183,12 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return Utility.data.get(idx).myGames.size();
+            return myGames.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return Utility.data.get(idx).myGames.get(position);
+            return myGames.get(position);
         }
 
         @Override
@@ -175,22 +201,26 @@ public class HomeActivity extends AppCompatActivity {
 
             convertView = getLayoutInflater().inflate(R.layout.row_home_gamelist, null);
 
+
             TextView tvGameTitle = convertView.findViewById(R.id.homeGameTitle);
             TextView tvGameGenre = convertView.findViewById(R.id.homeGameGenre);
             TextView tvGameDesc = convertView.findViewById(R.id.homeGameDesc);
             final TextView tvGameHours = convertView.findViewById(R.id.homeGameHours);
             Button btnPlayGame = convertView.findViewById(R.id.btnPlay);
 
-            tvGameTitle.setText(Utility.data.get(idx).myGames.get(position).gameTitle);
-            tvGameGenre.setText(Utility.data.get(idx).myGames.get(position).gameGenre);
-            tvGameDesc.setText(Utility.data.get(idx).myGames.get(position).gameDesc);
-            tvGameHours.setText(Utility.data.get(idx).myGames.get(position).gameHourPlay+"");
+
+            tvGameTitle.setText(games.get(position).getGameName());
+            tvGameGenre.setText(games.get(position).getGameGenre());
+            tvGameDesc.setText(games.get(position).getGameDesc());
+            tvGameHours.setText(myGames.get(position).getPlayinghour()+"");
 
             btnPlayGame.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int hours = playGame();
+                    //get playing hour from table mygame, then update it
                     Utility.data.get(idx).myGames.get(position).gameHourPlay += hours;
+                    //end
                     tvGameHours.setText(Utility.data.get(idx).myGames.get(position).gameHourPlay+"");
                 }
             });

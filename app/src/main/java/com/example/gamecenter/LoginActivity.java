@@ -138,14 +138,6 @@ public class LoginActivity extends AppCompatActivity {
 
         getDataFromJSON();
 
-        //delete soon
-        /*
-        if(Utility.adminLogin){
-            Utility.data.add(new UserData("US000","admin", "admin123", "admin@admin.com","1234567890", "Student", "Male","02/03/1999"));
-            Utility.adminLogin = false;
-        }
-        */
-        //end
 
         btnLogin = findViewById(R.id.btnLogIn);
         etEmail = findViewById(R.id.etEmailLogin);
@@ -167,35 +159,31 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Input your email format correctly", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    //delete soon
-                    int idx =  search(email, password);
-
-                    if(idx > -1){
-                        Utility.idxUser = idx;
-                    }
-                    else if(idx == -1){
-                        Toast.makeText(LoginActivity.this, "idx -1", Toast.LENGTH_SHORT).show();
-                    }
-                    //end
-
                     userHelper = new UserHelper(LoginActivity.this);
                     userHelper.open();
-
-                    String user_id = userHelper.login(email, password);
+                    ArrayList<String> login = userHelper.login(email, password);
                     userHelper.close();
 
-                    if(user_id.equals("")){
+                    if(login.get(0).equals("")){
                         Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
                     }
-                    else if(!user_id.isEmpty()){
+                    else if(!login.get(0).isEmpty()){
 
-                        Toast.makeText(LoginActivity.this, user_id, Toast.LENGTH_SHORT).show();
+
+                        String user_id = login.get(0);
+                        String user_name = login.get(1);
+                        String user_email = login.get(2);
+                        String user_phone = login.get(3);
+
+                        System.out.println(user_id);
 
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         intent.putExtra("user_id", user_id);
+                        intent.putExtra("user_name", user_name);
+                        intent.putExtra("user_email", user_email);
+                        intent.putExtra("user_phone", user_phone);
                         startActivity(intent);
                     }
-
                 }
             }
         });

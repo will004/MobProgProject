@@ -3,10 +3,13 @@ package com.example.gamecenterHelper;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.model.Game;
+
+import java.util.ArrayList;
 
 public class GameHelper {
     private DatabaseHelper databaseHelper;
@@ -47,5 +50,19 @@ public class GameHelper {
         contentValues.put(COL_GAMES_PRICE, game.getGamePrice());
 
         sqLiteDatabase.insert("games", null, contentValues);
+    }
+
+    public ArrayList<Game> getGameDetails(String game_id){
+
+        ArrayList<Game> output = new ArrayList<>();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM games WHERE game_id = ?", new String[]{game_id});
+        cursor.moveToFirst();
+
+        do{
+            output.add(new Game(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getInt(5), cursor.getInt(6)));
+        }while (!cursor.isAfterLast());
+
+        return output;
     }
 }
