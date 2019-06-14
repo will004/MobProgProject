@@ -2,6 +2,24 @@ package com.example.model;
 
 public class Game {
 
+    private String gameID;
+    private String gameName;
+    private String gameGenre;
+    private String gameDesc;
+    private int gameStock;
+    private int gamePrice;
+    private double gameRating;
+
+    public Game(String id, String title, String desc, String genre, double rating, int stock, int price) {
+        gameID = id;
+        gameName = title;
+        gameDesc = desc;
+        gameGenre = genre;
+        gameStock = stock;
+        gamePrice = price;
+        gameRating = rating;
+    }
+
     public String getGameID() {
         return gameID;
     }
@@ -10,12 +28,12 @@ public class Game {
         this.gameID = gameID;
     }
 
-    public String getGameTitle() {
-        return gameTitle;
+    public String getGameName() {
+        return gameName;
     }
 
-    public void setGameTitle(String gameTitle) {
-        this.gameTitle = gameTitle;
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 
     public String getGameGenre() {
@@ -50,29 +68,12 @@ public class Game {
         this.gamePrice = gamePrice;
     }
 
-    public float getGameRating() {
+    public double getGameRating() {
         return gameRating;
     }
 
-    public void setGameRating(float gameRating) {
+    public void setGameRating(double gameRating) {
         this.gameRating = gameRating;
     }
 
-    private String gameID;
-    private String gameTitle;
-    private String gameGenre;
-    private String gameDesc;
-    private int gameStock;
-    private int gamePrice;
-    private float gameRating;
-
-    public Game(String id, String title, String genre, String desc, int stock, int price, float rating) {
-        gameID = id;
-        gameTitle = title;
-        gameDesc = desc;
-        gameGenre = genre;
-        gameStock = stock;
-        gamePrice = price;
-        gameRating = rating;
-    }
 }

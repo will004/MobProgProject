@@ -17,7 +17,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.gamecenterHelper.GameHelper;
 import com.example.gamecenterHelper.UserHelper;
+import com.example.model.Game;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -31,10 +43,47 @@ public class LoginActivity extends AppCompatActivity {
     String email, password;
 
     UserHelper userHelper;
+    GameHelper gameHelper;
 
 
     String url = "https://api.myjson.com/bins/15cfg8";
+    ArrayList<Game> games;
 
+    void getDataFromJSON(){
+        games = new ArrayList<>();
+
+        JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                for(int i=0; i<response.length(); i++){
+                    try {
+                        JSONObject obj = response.getJSONObject(i);
+
+
+                        Game game = new Game(obj.getString("id"), obj.getString("name"), obj.getString("description"), obj.getString("genre"), obj.getDouble("rating"), obj.getInt("stock"), obj.getInt("price"));
+
+                        //insert to database
+                        gameHelper = new GameHelper(LoginActivity.this);
+                        gameHelper.open();
+                        gameHelper.insertGame(game);
+                        gameHelper.close();
+
+                    }
+                    catch (Exception e){
+
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+        requestQueue.add(request);
+    }
 
 
 
@@ -86,6 +135,8 @@ public class LoginActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         createHyperlinkHere();
+
+        getDataFromJSON();
 
         //delete soon
         /*

@@ -46,7 +46,7 @@ public class UserHelper {
         sqLiteDatabase.close();
     }
 
-    public void insertData(User user){
+    public void insertUser(User user){
 
         //cek user_id udah ada di database atau belum
 

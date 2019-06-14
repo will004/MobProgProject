@@ -31,7 +31,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static String COL_GAMES_RATING = "game_rating";
     private static String COL_GAMES_STOCK = "game_stock";
     private static String COL_GAMES_PRICE = "game_price";
-    private static String COL_GAMES_MYGAMEID = "mygame_id";
 
 
     private static String CREATE_TABLE_USER =
@@ -58,7 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             "%s TEXT)",
                     "mygames", COL_MYGAMES_ID, COL_MYGAMES_PLAYINGHOUR,  COL_MYGAMES_GAMEID, COL_MYGAMES_USERID
             );
-    private static  String CREATE_TABLE_GAMES =
+    private static String CREATE_TABLE_GAMES =
             String.format(
                     "CREATE TABLE %s(" +
                             "%s TEXT PRIMARY KEY," +
@@ -67,9 +66,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             "%s TEXT," +
                             "%s REAL," +
                             "%s INTEGER," +
-                            "%s INTEGER," +
                             "%s INTEGER)",
-                    "games",COL_GAMES_ID,COL_GAMES_NAME, COL_GAMES_DESC, COL_GAMES_GENRE, COL_GAMES_RATING, COL_GAMES_STOCK, COL_GAMES_PRICE, COL_GAMES_MYGAMEID
+                    "games",COL_GAMES_ID,COL_GAMES_NAME, COL_GAMES_DESC, COL_GAMES_GENRE, COL_GAMES_RATING, COL_GAMES_STOCK, COL_GAMES_PRICE
             );
 
     public DatabaseHelper(Context context) {
@@ -82,6 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_MYGAMES);
         db.execSQL(CREATE_TABLE_GAMES);
 
+        //admin account
         db.execSQL("INSERT INTO users VALUES('US000', 'admin', 'admin@test.com', 'admin123', '02/03/1999', '1234567890', 'Male', 1000000, 'Employee')");
     }
 
