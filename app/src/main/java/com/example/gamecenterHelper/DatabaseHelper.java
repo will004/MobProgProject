@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static String CREATE_TABLE_USER =
             String.format(
                     "CREATE TABLE %s (" +
-                            "%s TEXT," +
+                            "%s TEXT PRIMARY KEY," +
                             "%s TEXT," +
                             "%s TEXT," +
                             "%s TEXT," +
@@ -81,6 +81,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_USER);
         db.execSQL(CREATE_TABLE_MYGAMES);
         db.execSQL(CREATE_TABLE_GAMES);
+
+        db.execSQL("INSERT INTO users VALUES('US000', 'admin', 'admin@test.com', 'admin123', '02/03/1999', '1234567890', 'Male', 1000000, 'Employee')");
     }
 
     @Override

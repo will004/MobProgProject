@@ -33,6 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     TextView tvUsername, tvEmail, tvPhone, tvNoGame;
 
     int idx;
+    String user_id;
 
     ListView lvGameList;
 
@@ -120,7 +121,13 @@ public class HomeActivity extends AppCompatActivity {
         tvEmail = findViewById(R.id.homeEmail);
         tvPhone = findViewById(R.id.homePhone);
 
+        //delete soon
         idx = Utility.idxUser;
+        //end
+
+        Intent intent = getIntent();
+        user_id = intent.getStringExtra("user_id");
+
 
         tvUsername.setText(Utility.data.get(idx).name);
         tvEmail.setText(Utility.data.get(idx).email);

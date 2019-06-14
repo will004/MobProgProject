@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.example.model.User;
 
@@ -78,6 +77,23 @@ public class UserHelper {
         contentValues.put(COL_USER_STATUS, user.getStatus());
 
         sqLiteDatabase.insert("users", null, contentValues);
+    }
+
+    //return nya ID dari user
+    public String login(String email, String password){
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM users WHERE user_email = ? AND user_password = ?", new String[]{email, password});
+        cursor.moveToFirst();
+
+        String user_id;
+        if(cursor.getCount() == 0){
+            user_id = "";
+            return user_id;
+        }
+        user_id = cursor.getColumnName(0);
+
+        cursor.close();
+
+        return user_id;
     }
 
 }

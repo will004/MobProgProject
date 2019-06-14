@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.gamecenterHelper.UserHelper;
+
 public class LoginActivity extends AppCompatActivity {
 
     Button btnLogin;
@@ -27,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     String email, password;
+
+    UserHelper userHelper;
 
 
 
@@ -75,10 +79,14 @@ public class LoginActivity extends AppCompatActivity {
 
         createHyperlinkHere();
 
+        //delete soon
+        /*
         if(Utility.adminLogin){
             Utility.data.add(new UserData("US000","admin", "admin123", "admin@admin.com","1234567890", "Student", "Male","02/03/1999"));
             Utility.adminLogin = false;
         }
+        */
+        //end
 
         btnLogin = findViewById(R.id.btnLogIn);
         etEmail = findViewById(R.id.etEmailLogin);
@@ -100,15 +108,35 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Input your email format correctly", Toast.LENGTH_SHORT).show();
                 }
                 else{
+                    //delete soon
                     int idx =  search(email, password);
 
-                    if(idx == -1){
+                    if(idx > -1){
+                        Utility.idxUser = idx;
+                    }
+                    else if(idx == -1){
+                        Toast.makeText(LoginActivity.this, "idx -1", Toast.LENGTH_SHORT).show();
+                    }
+                    //end
+
+                    userHelper = new UserHelper(LoginActivity.this);
+                    userHelper.open();
+
+                    String user_id = userHelper.login(email, password);
+                    userHelper.close();
+
+                    if(user_id.equals("")){
                         Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
                     }
-                    else if(idx > -1){
-                        Utility.idxUser = idx;
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    else if(!user_id.isEmpty()){
+
+                        Toast.makeText(LoginActivity.this, user_id, Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        intent.putExtra("user_id", user_id);
+                        startActivity(intent);
                     }
+
                 }
             }
         });

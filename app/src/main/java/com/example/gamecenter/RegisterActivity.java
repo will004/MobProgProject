@@ -159,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 userHelper.open();
                 User user = new User(id, name, pass, email, phone, role, gender, date);
                 userHelper.insertData(user);
-                finish();
+                userHelper.close();
 
                 //delete soon
                 Utility.data.add(new UserData(id, name, pass, email, phone, role, gender, date));
