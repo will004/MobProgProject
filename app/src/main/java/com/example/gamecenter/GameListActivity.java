@@ -34,6 +34,8 @@ public class GameListActivity extends AppCompatActivity {
 
     ArrayList<GameData> games;
 
+    String user_id, user_name, user_email, user_phone;
+
     private void createToolbar() {
         toolbar = findViewById(R.id.toolbarGame);
         setSupportActionBar(toolbar);
@@ -58,7 +60,12 @@ public class GameListActivity extends AppCompatActivity {
 //                        return true;
 
                     case R.id.homeMenu:
-                        startActivity(new Intent(GameListActivity.this, HomeActivity.class));
+                        Intent intent = new Intent(GameListActivity.this, HomeActivity.class);
+                        intent.putExtra("user_id", user_id);
+                        intent.putExtra("user_name", user_name);
+                        intent.putExtra("user_email", user_email);
+                        intent.putExtra("user_phone", user_phone);
+                        startActivity(intent);
                         return true;
 
                     case R.id.gamesMenu:
@@ -93,7 +100,12 @@ public class GameListActivity extends AppCompatActivity {
                 return true;
 
             case R.id.aboutUs:
-                startActivity(new Intent(GameListActivity.this, AboutUsActivity.class));
+                Intent intent = new Intent(GameListActivity.this, AboutUsActivity.class);
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("user_name", user_name);
+                intent.putExtra("user_email", user_email);
+                intent.putExtra("user_phone", user_phone);
+                startActivity(intent);
                 return true;
         }
 
@@ -124,6 +136,12 @@ public class GameListActivity extends AppCompatActivity {
         createNavigationMenu();
 
         Utility.listContext.add(GameListActivity.this);
+
+        Intent intent = getIntent();
+        user_id = intent.getStringExtra("user_id");
+        user_name = intent.getStringExtra("user_name");
+        user_email = intent.getStringExtra("user_email");
+        user_phone = intent.getStringExtra("user_phone");
 
         //delete soon
         if(Utility.create10List){

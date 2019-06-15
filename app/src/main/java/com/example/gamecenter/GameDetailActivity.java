@@ -22,6 +22,8 @@ public class GameDetailActivity extends AppCompatActivity {
 
     int idxLv;
 
+    String user_id, user_name, user_email, user_phone;
+
     private void createToolbar() {
         toolbar = findViewById(R.id.toolbarGameDetail);
         setSupportActionBar(toolbar);
@@ -37,7 +39,12 @@ public class GameDetailActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                startActivity(new Intent(GameDetailActivity.this, GameListActivity.class));
+                Intent intent = new Intent(GameDetailActivity.this, GameListActivity.class);
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("user_name", user_name);
+                intent.putExtra("user_email", user_email);
+                intent.putExtra("user_phone", user_phone);
+                startActivity(intent);
                 finish();
                 return true;
         }
@@ -67,6 +74,11 @@ public class GameDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         idxLv = intent.getIntExtra("IDX_GAMES_LISTVIEW",0);
+
+        user_id = intent.getStringExtra("user_id");
+        user_name = intent.getStringExtra("user_name");
+        user_email = intent.getStringExtra("user_email");
+        user_phone = intent.getStringExtra("user_phone");
 
         tvGameTitle = findViewById(R.id.gameDetailsTitle);
         tvDescription = findViewById(R.id.gameDetailsDesc);

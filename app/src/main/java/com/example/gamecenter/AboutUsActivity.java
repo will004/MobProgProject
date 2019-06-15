@@ -30,6 +30,8 @@ public class AboutUsActivity extends AppCompatActivity implements OnMapReadyCall
 
     GoogleMap map;
 
+    String user_id, user_name, user_email, user_phone;
+
     private void createToolbar(){
         toolbar = findViewById(R.id.toolbarAboutUs);
         setSupportActionBar(toolbar);
@@ -57,11 +59,21 @@ public class AboutUsActivity extends AppCompatActivity implements OnMapReadyCall
 //                        return true;
 
                     case R.id.homeMenu:
-                        startActivity(new Intent(AboutUsActivity.this, HomeActivity.class));
+                        Intent intent = new Intent(AboutUsActivity.this, HomeActivity.class);
+                        intent.putExtra("user_id", user_id);
+                        intent.putExtra("user_name", user_name);
+                        intent.putExtra("user_email", user_email);
+                        intent.putExtra("user_phone", user_phone);
+                        startActivity(intent);
                         return true;
 
                     case R.id.gamesMenu:
-                        startActivity(new Intent(AboutUsActivity.this, GameListActivity.class));
+                        Intent intent1 = new Intent(AboutUsActivity.this, GameListActivity.class);
+                        intent1.putExtra("user_id", user_id);
+                        intent1.putExtra("user_name", user_name);
+                        intent1.putExtra("user_email", user_email);
+                        intent1.putExtra("user_phone", user_phone);
+                        startActivity(intent1);
                         return true;
 
                     case R.id.logoutMenu:
@@ -106,6 +118,12 @@ public class AboutUsActivity extends AppCompatActivity implements OnMapReadyCall
         createNavigationMenu();
 
         Utility.listContext.add(AboutUsActivity.this);
+
+        Intent intent = getIntent();
+        user_id = intent.getStringExtra("user_id");
+        user_name = intent.getStringExtra("user_name");
+        user_email = intent.getStringExtra("user_email");
+        user_phone = intent.getStringExtra("user_phone");
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);

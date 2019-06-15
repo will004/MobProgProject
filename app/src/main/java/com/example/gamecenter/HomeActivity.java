@@ -79,7 +79,12 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.gamesMenu:
-                        startActivity(new Intent(HomeActivity.this, GameListActivity.class));
+                        Intent intent = new Intent(HomeActivity.this, GameListActivity.class);
+                        intent.putExtra("user_id", user_id);
+                        intent.putExtra("user_name", user_name);
+                        intent.putExtra("user_email", user_email);
+                        intent.putExtra("user_phone", user_phone);
+                        startActivity(intent);
                         return true;
 
                     case R.id.logoutMenu:
@@ -110,7 +115,12 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
 
             case R.id.aboutUs:
-                startActivity(new Intent(HomeActivity.this, AboutUsActivity.class));
+                Intent intent = new Intent(HomeActivity.this, AboutUsActivity.class);
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("user_name", user_name);
+                intent.putExtra("user_email", user_email);
+                intent.putExtra("user_phone", user_phone);
+                startActivity(intent);
                 return true;
         }
 
