@@ -161,12 +161,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 userHelper.insertUser(user);
                 userHelper.close();
 
-                //delete soon
-                Utility.data.add(new UserData(id, name, pass, email, phone, role, gender, date));
-                //delete end
-
-
-
                 Toast.makeText(this, "Register success", Toast.LENGTH_SHORT).show();
 
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
