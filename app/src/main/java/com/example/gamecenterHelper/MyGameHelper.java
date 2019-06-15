@@ -33,7 +33,7 @@ public class MyGameHelper {
     public ArrayList<MyGame> searchMyGame(String user_id){
         ArrayList<MyGame> temp = new ArrayList<>();
 
-        Cursor cursor = sqLiteDatabase.query("mygames", null, null, null, null, null, null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM mygames WHERE user_id = ?", new String[]{user_id});
         cursor.moveToFirst();
 
         if(cursor.getCount() == 0){
@@ -45,9 +45,7 @@ public class MyGameHelper {
 
         do{
             mygame = new MyGame(cursor.getInt(0), cursor.getInt(1), cursor.getColumnName(2), cursor.getColumnName(3));
-
             temp.add(mygame);
-
             cursor.moveToNext();
         }while(!cursor.isAfterLast());
 

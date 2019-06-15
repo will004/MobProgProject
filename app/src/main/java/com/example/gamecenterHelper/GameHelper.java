@@ -68,14 +68,14 @@ public class GameHelper {
         return output;
     }
 
-    public ArrayList<Game> getGameDetails(String game_id){
+    public Game getGameDetails(String game_id){
         //used in HomeActivity
-        ArrayList<Game> output = new ArrayList<>();
+        Game output = null;
 
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM games WHERE game_id = ?", new String[]{game_id});
         cursor.moveToFirst();
 
-        if(cursor.getCount() != 0) output.add(new Game(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getInt(5), cursor.getInt(6)));
+        if(cursor.getCount() != 0) output = new Game(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getInt(5), cursor.getInt(6));
         cursor.close();
 
 

@@ -11,6 +11,13 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.gamecenterHelper.GameHelper;
+import com.example.gamecenterHelper.MyGameHelper;
+import com.example.model.Game;
+import com.example.model.MyGame;
+
+import java.util.ArrayList;
+
 public class GameDetailActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -20,9 +27,13 @@ public class GameDetailActivity extends AppCompatActivity {
     RatingBar rbGame;
     Button btnBuy;
 
-    int idxLv;
-
+    String game_id_selected;
     String user_id, user_name, user_email, user_phone;
+
+    GameHelper gameHelper;
+    MyGameHelper myGameHelper;
+
+    Game selected_game;
 
     private void createToolbar() {
         toolbar = findViewById(R.id.toolbarGameDetail);
@@ -54,10 +65,15 @@ public class GameDetailActivity extends AppCompatActivity {
 
     private boolean isBought(String gameID){
 
-        for(int i=0; i<Utility.data.get(Utility.idxUser).myGames.size(); i++){
-            if(gameID.equals(Utility.data.get(Utility.idxUser).myGames.get(i).gameID)){
-                return true;
-            }
+        //cek di table MyGames, apakah user udh beli game ini atau belom
+        //liat dari user_id dan game_id
+        myGameHelper = new MyGameHelper(GameDetailActivity.this);
+        myGameHelper.open();
+        ArrayList<MyGame> myGames = myGameHelper.searchMyGame(user_id);
+        myGameHelper.close();
+
+        for(int i=0; i<myGames.size(); i++){
+            if(gameID.equals(myGames.get(i).getGame_id())) return true;
         }
 
         return false;
@@ -73,7 +89,7 @@ public class GameDetailActivity extends AppCompatActivity {
         Utility.listContext.add(GameDetailActivity.this);
 
         Intent intent = getIntent();
-        idxLv = intent.getIntExtra("IDX_GAMES_LISTVIEW",0);
+        game_id_selected = intent.getStringExtra("game_id");
         user_id = intent.getStringExtra("user_id");
         user_name = intent.getStringExtra("user_name");
         user_email = intent.getStringExtra("user_email");
@@ -87,29 +103,37 @@ public class GameDetailActivity extends AppCompatActivity {
         rbGame = findViewById(R.id.gameDetailRating);
         btnBuy = findViewById(R.id.btnBuy);
 
-        tvGameTitle.setText(Utility.games.get(idxLv).gameTitle);
-        tvDescription.setText(Utility.games.get(idxLv).gameDesc);
-        tvGenre.setText(Utility.games.get(idxLv).gameGenre);
-        tvPrice.setText(Utility.games.get(idxLv).gamePrice+"");
-        tvStock.setText(Utility.games.get(idxLv).gameStock+"");
-        rbGame.setRating(Utility.games.get(idxLv).gameRating);
+        //ambil dari database
+        gameHelper = new GameHelper(this);
+        gameHelper.open();
+        selected_game = gameHelper.getGameDetails(game_id_selected);
+        gameHelper.close();
+
+        tvGameTitle.setText(selected_game.getGameName());
+        tvDescription.setText(selected_game.getGameDesc());
+        tvGenre.setText(selected_game.getGameGenre());
+        tvPrice.setText(selected_game.getGamePrice()+"");
+        tvStock.setText(selected_game.getGameStock()+"");
+        rbGame.setRating((float) selected_game.getGameRating());
+
 
         //harus cek dia punya game atau engga
-        if(isBought(Utility.games.get(idxLv).gameID)){
+        //modify soon
+        if(isBought(game_id_selected)){
             btnBuy.setEnabled(false);
         }
         else btnBuy.setEnabled(true);
-
+        //end
 
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Utility.games.get(idxLv).gameStock -= 1;
-//                if(Utility.games.get(idxLv).gameStock < 0){
-//                    Utility.games.get(idxLv).gameStock = 0;
-//                }
                 Intent paymentConfirmation = new Intent(GameDetailActivity.this, PaymentActivity.class);
-                paymentConfirmation.putExtra("IDX_BOUGHT", idxLv);
+                paymentConfirmation.putExtra("game_id", game_id_selected);
+                paymentConfirmation.putExtra("user_id", user_id);
+                paymentConfirmation.putExtra("user_name", user_name);
+                paymentConfirmation.putExtra("user_email", user_email);
+                paymentConfirmation.putExtra("user_phone", user_phone);
                 startActivity(paymentConfirmation);
             }
         });

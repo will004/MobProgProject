@@ -167,7 +167,7 @@ public class GameListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(GameListActivity.this, GameDetailActivity.class);
                 //soon be modified
-                intent.putExtra("IDX_GAMES_LISTVIEW", position);
+                intent.putExtra("game_id", games.get(position).getGameID());
                 intent.putExtra("user_id", user_id);
                 intent.putExtra("user_name", user_name);
                 intent.putExtra("user_email", user_email);

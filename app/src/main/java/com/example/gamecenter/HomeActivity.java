@@ -174,7 +174,11 @@ public class HomeActivity extends AppCompatActivity {
             //get game_id from mygame, then show its details here through table game
             gameHelper = new GameHelper(this);
             gameHelper.open();
-            games = gameHelper.getGameDetails(user_id);
+            //fix it soon
+            //games = gameHelper.getGameDetails(user_id);
+            for(int i=0; i<myGames.size(); i++){
+                games.add(gameHelper.getGameDetails(myGames.get(i).getGame_id()));
+            }
             gameHelper.close();
 
             //buat listView
