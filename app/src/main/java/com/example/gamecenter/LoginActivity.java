@@ -1,7 +1,9 @@
 package com.example.gamecenter;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -133,6 +135,9 @@ public class LoginActivity extends AppCompatActivity {
         createHyperlinkHere();
 
         getDataFromJSON();
+
+        //ask permission first when launch app
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},1);
 
 
         btnLogin = findViewById(R.id.btnLogIn);

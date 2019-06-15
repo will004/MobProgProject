@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +32,8 @@ public class PaymentActivity extends AppCompatActivity {
 
     MyGameHelper myGameHelper;
     GameHelper gameHelper;
+
+    SmsManager smsManager;
 
     private void createToolbar() {
         toolbar = findViewById(R.id.toolbarPayment);
@@ -97,6 +101,16 @@ public class PaymentActivity extends AppCompatActivity {
                     if (input < gamePrice) {
                         Toast.makeText(PaymentActivity.this, "Your input money is less than the price", Toast.LENGTH_SHORT).show();
                     } else {
+                        int change = input - gamePrice;
+
+                        //kirim SMS kembalian
+                        smsManager = SmsManager.getDefault();
+                        String sender = "15555215554", receiver = user_phone;
+                        Log.i("phone number", receiver);
+                        String smstext = "Thank you for buying game with us.\nYour change in this transaction is " + change +". ";
+                        smsManager.sendTextMessage(receiver, sender, smstext, null, null);
+                        Toast.makeText(PaymentActivity.this, smstext, Toast.LENGTH_SHORT).show();
+
                         //masukkin ke MyGames via database
                         myGameHelper = new MyGameHelper(PaymentActivity.this);
                         myGameHelper.open();
@@ -109,10 +123,6 @@ public class PaymentActivity extends AppCompatActivity {
                         gameHelper.updateStock(game_id_bought);
                         gameHelper.close();
 
-                        int change = input - gamePrice;
-
-                        //kirim SMS kembalian, bukan toast
-                        Toast.makeText(PaymentActivity.this, "Your change is " + change, Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(PaymentActivity.this, HomeActivity.class);
                         intent.putExtra("user_id", user_id);
