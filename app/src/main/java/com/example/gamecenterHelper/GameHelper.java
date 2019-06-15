@@ -73,15 +73,11 @@ public class GameHelper {
         //used in HomeActivity
         Game output = null;
 
-        Log.i("id", game_id);
-
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM games WHERE game_id = ?", new String[]{game_id});
         cursor.moveToFirst();
 
         if(cursor.getCount() != 0) {
-            Log.i("test", " test1");
             output = new Game(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getInt(5), cursor.getInt(6));
-            Log.i("test", " test2");
         }
         cursor.close();
 
@@ -90,6 +86,7 @@ public class GameHelper {
 
     public void updateStock(String game_id){
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM games WHERE game_id = ?", new String[]{game_id});
+
         int stock = -1;
         cursor.moveToFirst();
         if(cursor.getCount() != 0){
@@ -100,7 +97,8 @@ public class GameHelper {
         }
         cursor.close();
 
-        cursor = sqLiteDatabase.rawQuery("UPDATE games SET game_stock = "+ stock +" WHERE game_id = '"+ game_id +"'", null);
-        cursor.close();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("game_stock", stock);
+        sqLiteDatabase.update("games", contentValues, "game_id = ?", new String[]{game_id});
     }
 }
