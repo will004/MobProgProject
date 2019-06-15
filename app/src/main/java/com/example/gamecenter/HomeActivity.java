@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,7 +42,6 @@ public class HomeActivity extends AppCompatActivity {
     MyGameHelper myGameHelper;
     GameHelper gameHelper;
 
-    int idx;
     String user_id, user_name, user_email, user_phone;
     ArrayList<MyGame> myGames;
     ArrayList<Game> games;
@@ -149,13 +149,13 @@ public class HomeActivity extends AppCompatActivity {
         user_email = intent.getStringExtra("user_email");
         user_phone = intent.getStringExtra("user_phone");
 
-        //modify - get data from users
         tvUsername.setText(user_name);
         tvEmail.setText(user_email);
         tvPhone.setText(user_phone);
-        //end
 
         tvNoGame = findViewById(R.id.noGame);
+        myGames = new ArrayList<>();
+        games = new ArrayList<>();
 
         //get data from table mygames
         myGameHelper = new MyGameHelper(this);
@@ -164,18 +164,15 @@ public class HomeActivity extends AppCompatActivity {
         myGameHelper.close();
 
 
-
         if (myGames.size() == 0) {
             tvNoGame.setText(R.string.strNoGame);
         }
         else {
             tvNoGame.setText("");
-
             //get game_id from mygame, then show its details here through table game
             gameHelper = new GameHelper(this);
             gameHelper.open();
-            //fix it soon
-            //games = gameHelper.getGameDetails(user_id);
+
             for(int i=0; i<myGames.size(); i++){
                 games.add(gameHelper.getGameDetails(myGames.get(i).getGame_id()));
             }

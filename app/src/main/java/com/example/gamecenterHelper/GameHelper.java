@@ -73,12 +73,15 @@ public class GameHelper {
         //used in HomeActivity
         Game output = null;
 
+        Log.i("id", game_id);
+
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM games WHERE game_id = ?", new String[]{game_id});
         cursor.moveToFirst();
 
         if(cursor.getCount() != 0) {
+            Log.i("test", " test1");
             output = new Game(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getInt(5), cursor.getInt(6));
-            Log.i("hi", "found");
+            Log.i("test", " test2");
         }
         cursor.close();
 

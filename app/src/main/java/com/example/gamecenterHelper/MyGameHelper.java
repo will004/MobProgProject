@@ -44,7 +44,7 @@ public class MyGameHelper {
         MyGame mygame;
 
         do{
-            mygame = new MyGame(cursor.getInt(0), cursor.getInt(1), cursor.getColumnName(2), cursor.getColumnName(3));
+            mygame = new MyGame(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3));
             temp.add(mygame);
             cursor.moveToNext();
         }while(!cursor.isAfterLast());
