@@ -107,7 +107,7 @@ public class PaymentActivity extends AppCompatActivity {
                         smsManager = SmsManager.getDefault();
                         String sender = "15555215554", receiver = user_phone;
                         Log.i("phone number", receiver);
-                        String smstext = "Thank you for buying game with us.\nYour change in this transaction is " + change +". ";
+                        String smstext = "Your Transaction has been completed successfully, your change is " + change +".";
                         smsManager.sendTextMessage(receiver, sender, smstext, null, null);
                         Toast.makeText(PaymentActivity.this, smstext, Toast.LENGTH_SHORT).show();
 
