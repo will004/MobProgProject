@@ -74,7 +74,6 @@ public class GameDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         idxLv = intent.getIntExtra("IDX_GAMES_LISTVIEW",0);
-
         user_id = intent.getStringExtra("user_id");
         user_name = intent.getStringExtra("user_name");
         user_email = intent.getStringExtra("user_email");

@@ -20,6 +20,9 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.gamecenterHelper.GameHelper;
+import com.example.model.Game;
+
 import java.util.ArrayList;
 
 public class GameListActivity extends AppCompatActivity {
@@ -32,7 +35,8 @@ public class GameListActivity extends AppCompatActivity {
 
     ListView lvGamesGameList;
 
-    ArrayList<GameData> games;
+    GameHelper gameHelper;
+    ArrayList<Game> games;
 
     String user_id, user_name, user_email, user_phone;
 
@@ -113,6 +117,7 @@ public class GameListActivity extends AppCompatActivity {
     }
 
     //delete soon
+    /*
     private void addGames() {
         Utility.games.add(new GameData("GM001","Minesweeper", "Arcade", "Fun!", 10, 10000, (float) 3.0));
         Utility.games.add(new GameData("GM002","Laplace Mobile", "Adventure", "Wow", 10, 0, (float) 5.0));
@@ -125,6 +130,7 @@ public class GameListActivity extends AppCompatActivity {
         Utility.games.add(new GameData("GM009","Stardew Valley", "RPG", "Wow", 10, 0, (float) 4.0));
         Utility.games.add(new GameData("GM0010","Angry Bird", "Arcade", "Wow", 10, 0, (float) 5.0));
     }
+    */
     //end of delete
 
     @Override
@@ -143,12 +149,12 @@ public class GameListActivity extends AppCompatActivity {
         user_email = intent.getStringExtra("user_email");
         user_phone = intent.getStringExtra("user_phone");
 
-        //delete soon
-        if(Utility.create10List){
-            addGames();
-            Utility.create10List=false;
-        }
-        //end of delete
+        //get games from database
+        gameHelper = new GameHelper(this);
+        gameHelper.open();
+        games = gameHelper.getGames();
+        gameHelper.close();
+
 
         lvGamesGameList = findViewById(R.id.gameGameList);
 
@@ -160,7 +166,13 @@ public class GameListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(GameListActivity.this, GameDetailActivity.class);
+                //soon be modified
                 intent.putExtra("IDX_GAMES_LISTVIEW", position);
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("user_name", user_name);
+                intent.putExtra("user_email", user_email);
+                intent.putExtra("user_phone", user_phone);
+                //end
                 startActivity(intent);
             }
         });
@@ -170,12 +182,12 @@ public class GameListActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return Utility.games.size();
+            return games.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return Utility.games.get(position);
+            return games.get(position);
         }
 
         @Override
@@ -191,9 +203,9 @@ public class GameListActivity extends AppCompatActivity {
             TextView tvGamesDesc = convertView.findViewById(R.id.gamesDesc);
             RatingBar rbGamesRating = convertView.findViewById(R.id.gamesRating);
 
-            tvGamesTitle.setText(Utility.games.get(position).gameTitle);
-            tvGamesDesc.setText(Utility.games.get(position).gameDesc);
-            rbGamesRating.setRating(Utility.games.get(position).gameRating);
+            tvGamesTitle.setText(games.get(position).getGameName());
+            tvGamesDesc.setText(games.get(position).getGameDesc());
+            rbGamesRating.setRating((float) games.get(position).getGameRating());
 
             return convertView;
         }
