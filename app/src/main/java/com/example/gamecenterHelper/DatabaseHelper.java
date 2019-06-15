@@ -81,7 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_GAMES);
 
         //admin account
-        db.execSQL("INSERT INTO users VALUES('US000', 'admin', 'admin@test.com', 'admin123', '02/03/1999', '1234567890', 'Male', 1000000, 'Employee')");
+        db.execSQL("INSERT INTO users VALUES('US000', 'admin', 'admin@test.com', 'admin123', '02/03/1999', '15555215554', 'Male', 1000000, 'Employee')");
     }
 
     @Override
