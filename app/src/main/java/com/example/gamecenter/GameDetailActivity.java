@@ -65,8 +65,8 @@ public class GameDetailActivity extends AppCompatActivity {
 
     private boolean isBought(String gameID){
 
-        //cek di table MyGames, apakah user udh beli game ini atau belom
-        //liat dari user_id dan game_id
+        //check mygames table to know whether the user has bought the game or not
+        //using user_id and game_id
         myGameHelper = new MyGameHelper(GameDetailActivity.this);
         myGameHelper.open();
         ArrayList<MyGame> myGames = myGameHelper.searchMyGame(user_id);
@@ -75,6 +75,16 @@ public class GameDetailActivity extends AppCompatActivity {
         for(int i=0; i<myGames.size(); i++){
             if(gameID.equals(myGames.get(i).getGame_id())) return true;
         }
+
+        return false;
+    }
+
+    private boolean isAvailable(String gameID){
+
+        //if stock is 0, then can not buy
+        gameHelper.open();
+        Game temp = gameHelper.getGameDetails(gameID);
+        if(temp.getGameStock() == 0) return true;
 
         return false;
     }
@@ -119,7 +129,7 @@ public class GameDetailActivity extends AppCompatActivity {
 
         //harus cek dia punya game atau engga
         //modify soon
-        if(isBought(game_id_selected)){
+        if(isBought(game_id_selected) || isAvailable(game_id_selected)){
             btnBuy.setEnabled(false);
         }
         else btnBuy.setEnabled(true);
