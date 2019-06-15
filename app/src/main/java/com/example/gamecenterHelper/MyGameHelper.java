@@ -61,8 +61,21 @@ public class MyGameHelper {
         sqLiteDatabase.insert("mygames", null, contentValues);
     }
 
-    public void updatePlayingHour(int mygame_id, int playHour){
-        Cursor cursor = sqLiteDatabase.rawQuery("UPDATE mygames SET 'playinghour' = " + playHour + "WHERE 'mygame_id' = "+ mygame_id, null);
+    public int getPlayHour(int mygame_id){
+        int playHour;
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM mygames WHERE mygame_id = "+ mygame_id +" ", null);
+        cursor.moveToFirst();
+        playHour = cursor.getInt(1);
         cursor.close();
+
+        return  playHour;
+    }
+
+    public void updatePlayingHour(int mygame_id, int playHour){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("playinghour", playHour);
+
+        sqLiteDatabase.update("mygames", contentValues, "mygame_id = ?", new String[]{mygame_id+""});
     }
 }
