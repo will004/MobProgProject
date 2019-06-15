@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.model.Game;
 
@@ -75,10 +76,28 @@ public class GameHelper {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM games WHERE game_id = ?", new String[]{game_id});
         cursor.moveToFirst();
 
-        if(cursor.getCount() != 0) output = new Game(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getInt(5), cursor.getInt(6));
+        if(cursor.getCount() != 0) {
+            output = new Game(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getInt(5), cursor.getInt(6));
+            Log.i("hi", "found");
+        }
         cursor.close();
 
-
         return output;
+    }
+
+    public void updateStock(String game_id){
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM games WHERE game_id = ?", new String[]{game_id});
+        int stock = -1;
+        cursor.moveToFirst();
+        if(cursor.getCount() != 0){
+            stock = cursor.getInt(5);
+            stock -= 1;
+
+            if(stock < 0) stock = 0;
+        }
+        cursor.close();
+
+        cursor = sqLiteDatabase.rawQuery("UPDATE games SET game_stock = "+ stock +" WHERE game_id = '"+ game_id +"'", null);
+        cursor.close();
     }
 }

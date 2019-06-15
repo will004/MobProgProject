@@ -52,6 +52,15 @@ public class MyGameHelper {
         return temp;
     }
 
+    public void addMyGame(String user_id, String game_id){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("user_id", user_id);
+        contentValues.put("game_id", game_id);
+        contentValues.put("playinghour", 0);
+
+        sqLiteDatabase.insert("mygames", null, contentValues);
+    }
+
     public void updatePlayingHour(int mygame_id, int playHour){
         Cursor cursor = sqLiteDatabase.rawQuery("UPDATE mygames SET 'playinghour' = " + playHour + "WHERE 'mygame_id' = "+ mygame_id, null);
         cursor.close();

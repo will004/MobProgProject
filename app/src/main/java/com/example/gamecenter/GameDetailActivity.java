@@ -134,6 +134,7 @@ public class GameDetailActivity extends AppCompatActivity {
                 paymentConfirmation.putExtra("user_name", user_name);
                 paymentConfirmation.putExtra("user_email", user_email);
                 paymentConfirmation.putExtra("user_phone", user_phone);
+                paymentConfirmation.putExtra("game_price", selected_game.getGamePrice());
                 startActivity(paymentConfirmation);
             }
         });

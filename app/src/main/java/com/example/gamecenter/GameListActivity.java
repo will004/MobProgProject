@@ -116,23 +116,6 @@ public class GameListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //delete soon
-    /*
-    private void addGames() {
-        Utility.games.add(new GameData("GM001","Minesweeper", "Arcade", "Fun!", 10, 10000, (float) 3.0));
-        Utility.games.add(new GameData("GM002","Laplace Mobile", "Adventure", "Wow", 10, 0, (float) 5.0));
-        Utility.games.add(new GameData("GM003","Clash of Clans", "Arcade", "Battle", 15, 0, (float) 4.0));
-        Utility.games.add(new GameData("GM004","Brawl Stars", "Arcade", "Wow", 5, 0, (float) 5.0));
-        Utility.games.add(new GameData("GM005","Dota 2", "Real-Time Strategy", "Lit", 20, 0, (float) 4.0));
-        Utility.games.add(new GameData("GM006","Rise of Nations", "Real-Time Strategy", "Wow", 1, 100000, (float) 5.0));
-        Utility.games.add(new GameData("GM007","Assassin's Creed", "Adventure", "Wow", 10, 0, (float) 5.0));
-        Utility.games.add(new GameData("GM008","Counter Strike", "FPS", "Wow", 10, 0, (float) 5.0));
-        Utility.games.add(new GameData("GM009","Stardew Valley", "RPG", "Wow", 10, 0, (float) 4.0));
-        Utility.games.add(new GameData("GM0010","Angry Bird", "Arcade", "Wow", 10, 0, (float) 5.0));
-    }
-    */
-    //end of delete
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

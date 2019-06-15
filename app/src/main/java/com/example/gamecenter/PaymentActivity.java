@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.gamecenterHelper.GameHelper;
+import com.example.gamecenterHelper.MyGameHelper;
+
 public class PaymentActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -22,8 +25,11 @@ public class PaymentActivity extends AppCompatActivity {
     Button btnPay;
 
     String game_id_bought;
-
+    int price;
     String user_id, user_name, user_email, user_phone;
+
+    MyGameHelper myGameHelper;
+    GameHelper gameHelper;
 
     private void createToolbar() {
         toolbar = findViewById(R.id.toolbarPayment);
@@ -66,13 +72,15 @@ public class PaymentActivity extends AppCompatActivity {
         user_name = intent.getStringExtra("user_name");
         user_email = intent.getStringExtra("user_email");
         user_phone = intent.getStringExtra("user_phone");
+        price = intent.getIntExtra("game_price", 0);
 
-        //modify
         tvPrice = findViewById(R.id.paymentPrice);
         etPriceInput = findViewById(R.id.userPriceInput);
         btnPay = findViewById(R.id.btnPay);
-        final int gamePrice = Utility.games.get(game_id_bought).gamePrice;
-        tvPrice.setText(Utility.games.get(game_id_bought).gamePrice + "");
+
+        //modify, ambil harga game dari intent
+        final int gamePrice = price;
+        tvPrice.setText(gamePrice + "");
         //end
 
         btnPay.setOnClickListener(new View.OnClickListener() {
@@ -90,14 +98,16 @@ public class PaymentActivity extends AppCompatActivity {
                         Toast.makeText(PaymentActivity.this, "Your input money is less than the price", Toast.LENGTH_SHORT).show();
                     } else {
                         //masukkin ke MyGames via database
+                        myGameHelper = new MyGameHelper(PaymentActivity.this);
+                        myGameHelper.open();
+                        myGameHelper.addMyGame(user_id, game_id_bought);
+                        myGameHelper.close();
 
                         //update stocknya -=1
-
-                        //delete
-                        Utility.data.get(Utility.idxUser).myGames.add(new MyGame(Utility.games.get(game_id_bought).gameID, Utility.games.get(game_id_bought).gameTitle, Utility.games.get(game_id_bought).gameGenre, Utility.games.get(game_id_bought).gameDesc, 0));
-
-                        Utility.games.get(game_id_bought).gameStock -= 1;
-                        //end
+                        gameHelper = new GameHelper(PaymentActivity.this);
+                        gameHelper.open();
+                        gameHelper.updateStock(game_id_bought);
+                        gameHelper.close();
 
                         int change = input - gamePrice;
 

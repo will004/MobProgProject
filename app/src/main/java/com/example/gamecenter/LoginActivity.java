@@ -122,10 +122,6 @@ public class LoginActivity extends AppCompatActivity {
         return -1;
     }
 
-    private void pullDataFromAPI(){
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
