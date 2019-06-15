@@ -114,16 +114,6 @@ public class LoginActivity extends AppCompatActivity {
         tvHere.setHighlightColor(Color.TRANSPARENT);
     }
 
-    public int search(String emailCek, String passwordCek){
-        
-        for(int i=0; i<Utility.data.size(); i++){
-            if(emailCek.equals(Utility.data.get(i).email) && passwordCek.equals(Utility.data.get(i).password)){
-                return i;
-            }
-        }
-        return -1;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

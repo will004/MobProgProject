@@ -78,7 +78,6 @@ public class GameListActivity extends AppCompatActivity {
 
                     case R.id.logoutMenu:
                         Utility.finishActivities();
-                        Utility.idxUser = -1;
                         return true;
 
                     default:
