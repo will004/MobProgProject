@@ -85,6 +85,7 @@ public class GameDetailActivity extends AppCompatActivity {
         gameHelper.open();
         Game temp = gameHelper.getGameDetails(gameID);
         if(temp.getGameStock() == 0) return true;
+        gameHelper.close();
 
         return false;
     }
