@@ -21,7 +21,9 @@ public class PaymentActivity extends AppCompatActivity {
     EditText etPriceInput;
     Button btnPay;
 
-    int idxBought;
+    String game_id_bought;
+
+    String user_id, user_name, user_email, user_phone;
 
     private void createToolbar() {
         toolbar = findViewById(R.id.toolbarPayment);
@@ -37,7 +39,12 @@ public class PaymentActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                startActivity(new Intent(PaymentActivity.this, GameListActivity.class));
+                Intent intent = new Intent(PaymentActivity.this, GameListActivity.class);
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("user_name", user_name);
+                intent.putExtra("user_email", user_email);
+                intent.putExtra("user_phone", user_phone);
+                startActivity(intent);
                 return true;
         }
 
@@ -54,15 +61,19 @@ public class PaymentActivity extends AppCompatActivity {
         createToolbar();
 
         Intent intent = getIntent();
-        idxBought = intent.getIntExtra("IDX_BOUGHT", 0);
+        game_id_bought = intent.getStringExtra("game_id");
+        user_id = intent.getStringExtra("user_id");
+        user_name = intent.getStringExtra("user_name");
+        user_email = intent.getStringExtra("user_email");
+        user_phone = intent.getStringExtra("user_phone");
 
+        //modify
         tvPrice = findViewById(R.id.paymentPrice);
         etPriceInput = findViewById(R.id.userPriceInput);
         btnPay = findViewById(R.id.btnPay);
-
-        final int gamePrice = Utility.games.get(idxBought).gamePrice;
-
-        tvPrice.setText(Utility.games.get(idxBought).gamePrice + "");
+        final int gamePrice = Utility.games.get(game_id_bought).gamePrice;
+        tvPrice.setText(Utility.games.get(game_id_bought).gamePrice + "");
+        //end
 
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,14 +89,27 @@ public class PaymentActivity extends AppCompatActivity {
                     if (input < gamePrice) {
                         Toast.makeText(PaymentActivity.this, "Your input money is less than the price", Toast.LENGTH_SHORT).show();
                     } else {
-                        //masukkin ke MyGames
-                        Utility.data.get(Utility.idxUser).myGames.add(new MyGame(Utility.games.get(idxBought).gameID, Utility.games.get(idxBought).gameTitle, Utility.games.get(idxBought).gameGenre, Utility.games.get(idxBought).gameDesc, 0));
+                        //masukkin ke MyGames via database
 
-                        Utility.games.get(idxBought).gameStock -= 1;
+                        //update stocknya -=1
+
+                        //delete
+                        Utility.data.get(Utility.idxUser).myGames.add(new MyGame(Utility.games.get(game_id_bought).gameID, Utility.games.get(game_id_bought).gameTitle, Utility.games.get(game_id_bought).gameGenre, Utility.games.get(game_id_bought).gameDesc, 0));
+
+                        Utility.games.get(game_id_bought).gameStock -= 1;
+                        //end
 
                         int change = input - gamePrice;
+
+                        //kirim SMS kembalian, bukan toast
                         Toast.makeText(PaymentActivity.this, "Your change is " + change, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(PaymentActivity.this, HomeActivity.class));
+
+                        Intent intent = new Intent(PaymentActivity.this, HomeActivity.class);
+                        intent.putExtra("user_id", user_id);
+                        intent.putExtra("user_name", user_name);
+                        intent.putExtra("user_email", user_email);
+                        intent.putExtra("user_phone", user_phone);
+                        startActivity(intent);
                         finish();
                     }
                 }
